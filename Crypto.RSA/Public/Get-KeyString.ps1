@@ -2,7 +2,7 @@ function Get-KeyString {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, Position = 0 )]
-          [System.Security.Cryptography.RSAParameters]$publicKey
+        [System.Security.Cryptography.RSAParameters]$publicKey
     )
 
     begin {
