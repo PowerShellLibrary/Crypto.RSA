@@ -9,6 +9,28 @@ Describe 'Crypto.RSA.Tests' {
             $keys.public | Should -Not -BeNullOrEmpty
             $keys.private | Should -Not -BeNullOrEmpty
         }
+
+        It "Generates private key - using the same csp" {
+            $csp = [System.Security.Cryptography.RSACryptoServiceProvider]::new(2048)
+            $keys = New-KeyPair $csp
+            Get-PrivateKey $csp | Should Be $keys.private
+        }
+
+        It "Generates private key - using different csp" {
+            $keys = New-KeyPair
+            Get-PrivateKey | Should Not Be $keys.private
+        }
+
+        It "Generates public key - using the same csp" {
+            $csp = [System.Security.Cryptography.RSACryptoServiceProvider]::new(2048)
+            $keys = New-KeyPair $csp
+            Get-PublicKey $csp | Should Be $keys.public
+        }
+
+        It "Generates public key - using different csp" {
+            $keys = New-KeyPair
+            Get-PublicKey | Should Not Be $keys.public
+        }
     }
 
     Context "String encryption - happy path" {
